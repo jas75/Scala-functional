@@ -229,9 +229,32 @@ c est une variable qui peut etre réutilisée.
 Ici on calcule la longueur d'une liste
 
 def length[A](list: List[A]): Int = list match{
-	case Nil => 0
-	case _ :: tail => 1 +length(tail)
+	case Nil => 0 // cas d'une liste vide
+	case _ :: tail => 1 +length(tail)  // deconstruction de la liste en deux variables "_" et "tail"
 }
+
+
+On peut assi matcher sur un type ou la verification d'une condition
+
+def matchTest(x : Any): Any = x match {
+	case 1 => "one"
+	case "two" => 2
+	case x: Int if x < 42 => "weak"
+	case y: Int => "scala.Int"
+}
+
+Exemple de l utilisation d'un trait et de case class :
+
+trait Expr{
+	def eval: Int = this match{
+		case Num(n) => n
+		case Sum(e1,e2) => e1.eval + e2.eval
+	}
+}
+
+case class Num(n: Int) extends Expr
+case class Sum(e1: Expr, e2: Expr) extends Expr
+
 
 
 
