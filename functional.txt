@@ -1,0 +1,178 @@
+Programmation fonctionnelle
+
+
+
+I PREMIERE FONCTION
+
+def identity(x : Any) = x
+
+x est le parametre de classe Any. Any est la classe mere dont herite toutes les autres classes.
+Pas d instruction return.
+
+
+
+
+II LA RECURSION
+
+pas de variables modifiables en fonctionel, pas de boucle. A la place on utilise les fonctions recursives.
+Tout algo utilisant une boucle peut etre ecrit avec une fonction recursive.
+
+
+	Recursivité terminal
+
+Une fonction récursive terminal est une fonction ou l'appel récursif est la dernière instruction 
+à etre évaluée.
+
+Une fonction non terminal garde des valeurs intermediaires dans la pile d appel.
+
+Exemple de fonction non terminale: 
+
+def fac(n:Bigint): Bigint = if(n == 0) 1 else n * fac(n-1)
+
+Il faut ecrire le plus possbile de fonctions recursives terminales. Le compilateur les transforme en boucle.
+
+
+	Les accumulateurs
+
+Un accumulateur est une variable qui contient les valeurs déja connues ou calculées. On le passe en parametre
+et est modifié a chaque appel de la fonction par elle meme.
+
+def factorial(n: Bigint, acc:BigInt) : BigInt = 
+	if(n == 0) acc else factorial(n - 1, n * acc)
+
+def fac(n: BigInt) = factorial(n,1)  une fonction chapeau
+
+fac(42)
+
+
+
+
+III FONCTION D'ORDRE SUPERIEUR
+
+Tout est fonction en fonctionel. Meme un parametre par exemple.
+
+Une fonction d orfre supérieur respecte au moins une de ces propriétés:
+
+- Prendre une ou plusoeurs fonctions comme entrée
+
+- Renvoyer une fonction
+
+Exemple: une fonction retournant la somme des images de deux entiers par f 
+
+def sum(f : Int => Int, a: Int, b: Int): Int =   // le premier parametre est une fonction
+	f(a) + f(b)
+
+sum(fac,3,4) //fac est la fonction just au dessus
+
+
+	Fonctions anonymes
+
+C est une meilleur alternative aux fonctions d'ordre supérieur. Elles n'ont pas de nom et ne sont pas préfixées par "def".
+Très utile pour les listes.
+
+Exemple : Appel de la fonction Sum avec une fonction identité anonyme.
+
+sum({x: Int => x},3,4)
+
+
+
+
+IV L'EVALUATION RETARDEE
+
+mot clé lazy. Le programme n'execute pas le code avant que les résultats de ce code soit nécessaire.
+Ca évite le calcul d'un résultat s'il n'est finalement pas utilisé.
+
+def expr{
+	val x = {print("x"); 1}
+	lazy val y = {print ("y"); 2}
+	def z = { print("z"); 3}
+
+	z + x + y + z + x + y
+}
+
+expr
+
+3 affectations avec 3 fonctions anonyme qui affichent un message avant de retourner une valeur . 
+
+- la premiere utilise l'évaluation stricte. Elle n'est effectuée qu'une fois, à la declaration de x. 
+Cette fonctiontion affiche x
+
+- La deuxieme utilise l'évaluation retardée. Elle n'est effectuée qu'une fois, au premier appel e y. La fonction affiche y.
+
+- La troisième est une méthode qui affichera et retournera z à chacun de ses appels .
+
+Le code affiche xzyz //pas compris
+
+
+	Fonctions déterministes
+
+Une fonction deterministe retourne toujours la même valeur pourvu qu'on lui donne toujours le memes parametres.
+ Les fonctions iterargissant avec l'utilisateur ou qui utilisent des données sysytèmes qui peuvent varier (l'heure par exemple)
+ ne sont pas deterministe.
+
+ Les avantages : 
+
+ - Une fonction deterministe appelée deux fois avec les memes parametres ne sera calculées qu'une fois.
+
+ - Mieux couvertes par les tests
+
+ - Participe à réduire le risque d'effets de bords.
+
+
+
+ V LISTES
+
+ Les listes sont à la Programmation fonctionnelle ceque les tableaux sont à la Programmation impérative.
+
+ C'est la structure de données par excellence lorsqu'on travaille avec un algo recursif.
+
+
+Création : 
+
+- Liste ordonée (ou intervale) : (1 to 5) || ('a' to 'z')
+
+- Liste vide : List() ou Nil
+
+- Liste pleine : List(1,2,3,4,5)
+
+Méthodes et opérateurs:
+
+- head : retourne le premier element
+
+- tail : retourne la liste de tous les éléments qui suivent le premier
+
+- l'opérateur :: insère en tete de liste Ex: 1::2::Nil crée la liste : List(1,2)
+
+- l'opérateur ::: pour concaténer des listes ensembles
+
+	
+	Méthode d'ordre supérieur
+
+Il existe des fonctions d'ordre supérieur s'appliquant aux collections. Donc pour les listes.
+
+- map(f) : applique une fonction sur chaque élément d'une liste
+
+-filter(f) : conserve les éléments satisfaisant f
+
+Exemple: 
+
+(1 to 5).toList.map(x => x * 2) multiplie les element de la liste par 2 (map)
+(1 to 5).toList.filter(x => x%2 == 0) garde les elements pairs de la liste
+
+
+- fonction fold: Parcourt la liste en lui appliquant un opérateur pour la compresser en une valeur ->
+foreach avec accumulateur qui retourne a valeur final de l'accumulateur. 
+
+En gros tout les elements de ta liste tu peux les additioner, les diviser, les multiplier etc...
+
+En scala il y'en a deux : foldLeft et foldRight.
+
+Exemple:
+
+('a' to 'z').foldRight("")((x,y) => x+ y) concatene tout les caractères d'une liste en une seule chaine.
+
+VI AUTOUR DES CLASSES
+
+	Traits
+
+
