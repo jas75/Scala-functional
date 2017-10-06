@@ -175,4 +175,68 @@ VI AUTOUR DES CLASSES
 
 	Traits
 
+Permettent d'hériter des methodes de parents mutliple.
+Un trait est une interface (au sens Java)
+
+Definiton de méthode sans contenu. Tu connais deja.
+
+
+	L objet compagnon
+
+Les classes scala ne peux pas avoir de variables ou méthodes static.
+A la place on peut les accompagner d'un singleton static appelé objet compagon avec le mot clé object.
+
+Exemple :
+
+class Main {
+	def sayHelloWorld(){
+		println("Hello world")
+	}
+}
+
+object Main {
+	def sayHi(){
+		println("Hi")
+	}
+}
+
+Main.sayHi()
+
+
+	Les extracteurs
+
+Fonctionnalité propre à scala qui permet de faire du pattern amtching sur un objet et d'en extraire des propriétés.
+Définis par la méthode unapply de l'objet comapgnon.
+Il existe des classes dont la unapply est prédéfinie pour tous les paramètres de la classe. Ceux sont les case class
+
+
+
+VII FILTRAGE PAR MOTIF
+
+Scala integre des outils pour faier du filtrage par motif.
+match est comme un switch 
+
+Exemple: Ici c est une instruction match pour transformer des chiffres en chaine de caractere
+
+def matchTest(x: Int) : String = x match{
+	case 1 => "one"
+	case 2 => "two"
+	case _ => "many" // _ est utilisé pour reconnaitre n'importe quel entier
+} 
+
+c est une variable qui peut etre réutilisée.
+
+Ici on calcule la longueur d'une liste
+
+def length[A](list: List[A]): Int = list match{
+	case Nil => 0
+	case _ :: tail => 1 +length(tail)
+}
+
+
+
+
+
+
+
 
