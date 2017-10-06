@@ -39,7 +39,7 @@ we can cache the output
 
 
 
-			II First class functions & higer order functions
+			II First class functions & higer order functions & anonymous functions
 
 first class function ?
 If you can treeat a function as a value, it is a first class function
@@ -92,8 +92,53 @@ def getOps(c: Int) = (i :Int)=> {
 	else tripler(i)
 }
 
+//let say i have this variable that is a list
+//getOps is a high order function, which returns the tripler function and applies it to every items in List
 
+val r = 1 to 5
+r.map(getOps(-4))
 
+It's gonna return a Range type of all value in the list times 3. 
+
+Instead of the above functions, we can make : 
+
+def getops(c:Int)=(i:Int) => {
+	if(c>0){i*2}
+	else {i*3}
+}
+
+		WHAT IS THE PURPOSE OF ALL OF THIS
+
+customers: Array[String] = Array("ben","romain","jas","damien")
+
+for(i <- 0 to customers.length -1){
+	println("Hi" + customers(i))
+}
+
+will output Hi ben Hi romain etc
+
+def remindPayment(x:String) = println("Payment reminder for " + x)
+
+for(i <- 0 to customers.length -1){
+	remindPayment(customers(i))
+}
+
+will output Payment reminder for ben etc..
+
+The sumpliest way to do this would be :
+
+def forEach(a : Array[String], f: String => Unit ) = {
+	var i = 0
+
+	for(i <- 0 to a.length -1){
+		f(a(i))
+	}
+}
+
+forEach(customers,remindPayment)
+
+Will output the same. 
+This forach function can be reused for anything
 
 
 
