@@ -1,0 +1,99 @@
+A function takes the input, computes the output and returns it.
+That's all, if it does anything else that impacts the code outside of it, 
+it is called a side effect of the function.
+
+
+			I. Pure functions and sude effects & referential transparancy
+
+1. The output is only dependent on input parameters values
+2. The function doesn't modify the input parameter values
+3. the function doesn't have a side effect
+
+More 
+
+A function is referntially transparent if evaluating it gives the same value for same arguments.
+You can tedst the purity of a function using referntial transparency
+
+Why pure functions ?
+
+1.Safe way to program
+2.Composable or modular
+
+Exemple : val x = doThis(a).thenThis(b)
+							.andThenThis(c)
+							.doThistoo(d)
+							.andFinnalyThis(e)
+
+It is very common in FP to combine many functions into a simple solution
+you cando this with every functions but better with pure functions because they don't have side effects.
+
+3.Easy to test
+
+Myfunction1->prints "Hello world" not pure function
+Myfunction2 -> Returns "Hello world" pure function
+
+4.Memoizable
+we can cache the output
+
+5. Can be lazy
+
+
+
+			II First class functions & higer order functions
+
+first class function ?
+If you can treeat a function as a value, it is a first class function
+
+1. you can assign a value to a variable, and assign a function to a variable
+
+2. You can pass it as an argument to other functions
+
+3. You can return it as a value from other functions
+
+In scala, all functions are first class functions
+
+higher order function ?
+
+a function that doest at least one of the following is a higher order function
+
+1.takes one or more functions as arguments
+2 . Return a function as its result
+
+Ex: def f1=println("I do nothing") // by default, this a first class function
+
+def f2(f: Unit) = f // if f2 can take f1 as an argument, f2 is a higer order function
+
+Example of a function returning a function :
+//later
+
+anonymous function ?
+
+A standard function :
+def doubler(i: Int): Int = {return i * 2}
+
+if you don't give a name to a function, it's anonymous, also called literal function
+
+(i: Int) => {i*2}:Int // a,onymous function uses =>
+
+Example with assigning to a val 
+val d = (i: Int) => { i*2} : Int
+
+
+Then what is the purpose of anonymous function ?
+
+def getOps(c:Int) = (i: Int) => { 
+ // your code
+}
+
+def getOps(c: Int) = (i :Int)=> { 
+	val doubler = (x:Int)=> { x * 2}
+	val tripler = (x:Int)=> { x * 3 }
+	if(c>0) doubler(i)
+	else tripler(i)
+}
+
+
+
+
+
+

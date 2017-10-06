@@ -1,5 +1,10 @@
-Programmation fonctionnelle
+Functional programming is a way of writing software applications using only pure functions
+and immutable values
 
+
+
+
+Programmation fonctionnelle
 
 
 I PREMIERE FONCTION
@@ -254,6 +259,39 @@ trait Expr{
 
 case class Num(n: Int) extends Expr
 case class Sum(e1: Expr, e2: Expr) extends Expr
+
+
+VIII LES TYPES POLYMORPHE
+
+le type Option est un type abstrait générique qui permet de caractériser la presence ou l'absence de valeur.
+Il peut contenir 1 ou 0 élément.
+
+Option[A] utilise deux sous-types
+
+- Some[A]
+- Nones qui ne contient rien
+
+Les methodes D'Option
+
+- map(f) :  applique la fonction f sur la valeur contenue. si l'option contient une valeur.
+- isDefined: Boolean et isEmpty: Boolean= retourne true si l'option contient une valeur.
+- get: A retourne la valeur contenue dans l'option ou une exception si l'option est vide
+-getOrElse(b): A retourne la valeur contenue dans l'option, renvoie b si l'option est vide.
+
+Permet de ne pas faire de null
+
+	Les Future
+
+c est un type abstrait générique. Sert a manipuler des résultats pas encore calculés. 
+On peut ainsi écrire le code qui sera executé une fois le calcul terminé. On peut le comparer à l'appek d'une
+fonction callback.
+
+	for-comprehension
+
+Permet de manipuler plusieurs Option ou Future simultanément.
+
+for{ ...instructions...} on affecte des valeurs en utilisant un Future ou une Option
+yield {...instructions...} dans lequel on peut utiliser les valeurs déclarées précédemment.
 
 
 
