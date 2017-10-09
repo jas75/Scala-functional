@@ -1,9 +1,11 @@
+			I. Pure functions and sude effects & referential transparancy
+
 A function takes the input, computes the output and returns it.
 That's all, if it does anything else that impacts the code outside of it, 
 it is called a side effect of the function.
 
 
-			I. Pure functions and sude effects & referential transparancy
+			
 
 1. The output is only dependent on input parameters values
 2. The function doesn't modify the input parameter values
@@ -35,7 +37,7 @@ Myfunction2 -> Returns "Hello world" pure function
 4.Memoizable
 we can cache the output
 
-5. Can be lazy
+5. Can be lazy // see that later
 
 
 
