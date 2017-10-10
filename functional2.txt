@@ -142,5 +142,234 @@ forEach(customers,remindPayment)
 Will output the same. 
 This forach function can be reused for anything
 
+		III Immutablity and recursions
+
+Unable to change
+We create values or objects by initalizing them
+var is a variable, you can change it
+val is a constant, you can't change it's immutable
+
+When using scala as a functional programming language, you use val
+
+Programs with only constants.
+
+So how can we program without variables, and what are the benefits ?
+ Firt, immutablity helps to take a mathematical approach and create pure functions.
+
+ Second, more thread safe .
+
+ Recursion
+
+ A recursion is a programming tecnique in which a function calls itself.
+ Most of the loops can be replaced by recursion.
+ We can convert loops into recursion and avoid mutation ( var that can change)
+
+
+How to approach recursion ?
+
+1. Indentify the list
+2. Implement the termination condition
+3. Compute te head and recurs wit the tail
+
+Ex: 
+
+def rFactorial(n : Int): Int = {
+	if(n <= 0){
+		return 1
+	}
+	else{
+		return n * rFactorial(n-1) // here the mutliplication is the final action. it's a recursive function
+	}
+}
+
+def tFactorial(n : Int, f: Int) : Int = { // f must be 1
+	if(n <= 0){
+		return 1
+	}
+	else{
+		return tFactorial(n-1,n*f) // the recursive cal is the last action this is a tail recursive function
+	}
+}
+
+
+ recursive function with only one parameter:
+
+def Factorial(i : Int): Int = {
+	println("You called Factorial for "+i) // side effect
+
+	def tFactorial(n: Int, f:Int):Int = {
+		if(n <= 0){
+			f
+		}
+		else{
+			tFactorial(n-1, n*f)
+		}
+	}
+
+	return tFactorial(i,1)
+}
+
+The list is (5,4,3,2,1,0)
+
+in a list the first element is called th head, the rest is called the tail
+
+You can check the stack by throwing an exception
+
+def eFactorial(n: Int): Int = {
+	if(n <= 0){
+		throw new Exception("boom !")
+	}
+	else{
+		return n * eFactorial(n-1) 
+	}
+}
+
+For memory and performance, recursions are better than loops.
+
+a tail recursion is a function call performed at the last action
+
+		IV Statements
+
+A program is nothing but a sequence of statements
+A sequence of statements that modifiy some program state
+
+example : 
+
+def myResult(m:Int) = {
+	var r= "" // definition
+	if(m >=50){ // if statement modify the r value
+		r="passed"
+	}
+	else{
+		r="failed"b
+		println(r) // change the state of the console .
+	}
+}
+
+This program is against function programming. In FP we don't modify states.
+
+A functional statement returns a value
+
+println function returns a Unit. like void.
+Unit has however a value
+
+Why do every statement return a value.
+
+It helps to achieve mutability.
+
+Imperative function
+
+def myResult(m:Int) = {
+	var r =""
+
+	if(m>=50)
+		r="passed"
+	else
+		r="failed"
+
+	println(r)
+}
+
+Same function but in functional
+
+def myResult(m:Int) = {
+	if(m >=50) "passed"
+	else "failed"
+}
+
+		V Strict and lazy evalutation
+
+Strict evaluate the expression now
+lazy evaluate on the first use
+
+Strict :
+
+val s = Factorial(15)/Factorial(40)
+
+In case Of higer order function
+The function is evaluated in every use.
+ the solution might be to cache the function in a val like this to avoid multiple evaluation
+
+ def test(f: =>Int){
+ 	val t = f
+ }
+
+lazy : 
+ 
+ lazy val l = Factorial(15)/Factorial(11)
+ When declaring a val with lazy keyword, scala will not evaluate the expression until we use it
+
+ result at first println(l)
+
+ You called factorial for 15
+You called factorial for 11
+50
+
+and for Second
+50 
+
+the reason is that scala evaluates the lazy functions only once and when it is used
+
+
+
+So what is lazy evalutation?
+Evaluate on first use
+
+lazy on a higer order function
+
+def twice(f: =>Int) = {
+	val i = f
+
+	println("We didn't use i yet")
+
+	i + i
+}
+
+twice(Factorial(15)/Factorial(11))
+
+Output :
+
+You called factorial for 15
+you called factorial for 11
+We didn't use i yet 
+res0: Int = 100
+
+
+def twice(f: =>Int) = {
+	lazy val i = f
+
+	println("We didn't use i yet")
+
+	i + i // sice i is lazy, it will be exectued by scala here, when we use it
+}
+
+
+twice(Factorial(15)/Factorial(11))
+
+Output :
+
+We didn't use i yet 
+You called factorial for 15
+you called factorial for 11
+res0: Int = 100
+
+Summarize
+
+Defaut metohd in Scala is strict evaluation
+You can cache a pure function value in case of a higher order function
+
+
+Lazy alternative to lists
+
+Stream. insted of toList, use toStream.
+toStream evaluates the first line of the file, the rest is ?.
+Since toStreamis a lazy structure, the rest is not evaluated
+
+val searchInAFile = Source.fromFile(nameOfFile).getLines().toStream.filter(_.contains("une chaine")).take(2) 
+this line of code knows that it must take 2 lines containing "une chaine" but there are not evaluated
+since it's a lazy structure. It will be when we use it
+Why use that ?
+
+
 
 
