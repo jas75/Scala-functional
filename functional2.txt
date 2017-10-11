@@ -356,7 +356,7 @@ res0: Int = 100
 Summarize
 
 Defaut metohd in Scala is strict evaluation
-You can cache a pure function value in case of a higher order function
+You can cache a pure function value in casee of a higher order function
 
 
 Lazy alternative to lists
@@ -367,8 +367,95 @@ Since toStreamis a lazy structure, the rest is not evaluated
 
 val searchInAFile = Source.fromFile(nameOfFile).getLines().toStream.filter(_.contains("une chaine")).take(2) 
 this line of code knows that it must take 2 lines containing "une chaine" but there are not evaluated
-since it's a lazy structure. It will be when we use it
-Why use that ?
+since it's a lazy structure. It will be when we use it.
+
+To print both the lines :  s foreach println
+
+look at Fibonnaci series. 
+Scala allows us to make "infinite loop" with lazy evaluation. Because the data is not evaluated yet,
+we can make infinite lists just waiting for their first use
+
+
+			VI PAttern matching
+
+
+Type checking for example
+
+Complete example:
+
+Assume you have a class to define a message
+
+class Message(p_id: String, p_msg: String){
+	val id = p_id;
+	val msg = p_msg;
+}
+
+Now assume you have a List of Messages
+
+val messageList= List(
+	Message("tom@gmail.com","Message text1"),
+	Message("jason@gmail.com","Message salut"),
+	Message("dalien@gmail.com","hey"),
+	Message("0646283638","yes bitch"),
+	Message("salut@gmail.com","ok"),
+)
+
+Some of them are email while other are phone number
+we ignore domain names
+
+Do we have two successive emails from the same persone on this list ?
+create a function for this
+Step by step logic : 
+
+1. Take two messages from the list // Deconstruction
+2. Exrtact the sender's id from both of the messages // Deconstruction
+3. Check if both of them are email adresses // Type test
+4. If yes, ignore the domain part and extract only the username // Deconstruction
+5. Check if both usernames are same // if condition
+6. If yes return a positive answer // Action
+7. If no, remove the head of the list and repeat wit the tail of the list // deconstruction
+8. If you reach the end of this list, return a negative answer
+
+
+1/ Take 2 messages from the list and deconstruct the list into three parts :
+the first message:
+Message("tom@gmail", "Message text1")
+the second message:
+Message("jason@gmail.com","Message salut")
+the remaining message:
+Message("dalien@gmail.com","hey"),
+Message("0646283638","yes bitch"),
+Message("salut@gmail.com","ok")
+
+2/ Again deconstruction of a message into id and the message text
+
+3/ This is a type test, if we have a class for the email adress, then we want to check if the given string 
+is of an email adress type
+
+4/ Decobstruction again. extract the username from email adresss
+
+5/ If condition
+
+6/ It s just an action
+
+7/ Again deconstruction, this is again deconstructing your list into a head and the tail
+
+
+			VII Closure
+
+A closure is a function: Like any other scala functions, a closure may be pure or impure, named or anonymous.
+ A closure is a function that uses one or more free variables.
+
+
+ See later
+
+
+
+
+
+ 
+
+
 
 
 
